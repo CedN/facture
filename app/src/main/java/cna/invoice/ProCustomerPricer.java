@@ -19,14 +19,14 @@ class ProCustomerPricer {
     }
 
     private BigDecimal getElectricityPricePerKwh(Integer sales) {
-        if (sales > 1_000_000) {
+        if (sales >= 1_000_000) {
             return ELECTRICITY_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_OVER_1_MILLION;
         }
         return ELECTRICITY_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_BELLOW_1_MILLION;
     }
 
     private BigDecimal getGasPricePerKwh(Integer sales) {
-        if (sales > 1_000_000) {
+        if (sales >= 1_000_000) {
             return GAS_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_OVER_1_MILLION;
         }
         return GAS_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_BELOW_1_MILLION;

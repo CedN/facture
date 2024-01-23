@@ -52,16 +52,16 @@ class InvoiceAmountCalculatorShould {
     }
 
     @Nested
-    class ForProCustomerWithSalesOver1Million {
+    class ForProCustomerWithSalesOf1MillionOrMore {
 
-        private ProCustomer customer = new ProCustomer("EKW146830056", "23646789543457", "Big Company", 1_000_001);
+        private ProCustomer customer = new ProCustomer("EKW146830056", "23646789543457", "Big Company", 1_000_000);
 
         @Test
         void compute_electricity_amount() {
             var consumedKwh = BigDecimal.valueOf(4_670.24754d);
 
             var invoicedAmount = new InvoiceAmountCalculator().calculate(
-                    new ProCustomer("EKW146830056", "23646789543457", "Big Company", 1_000_001),
+                    customer,
                     new EnergyConsumption(EnergyType.ELECTRICITY, consumedKwh));
 
             Assertions.assertEquals(new Amount(consumedKwh.multiply(ELECTRICITY_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_OVER_1_MILLION)), invoicedAmount);
@@ -72,7 +72,7 @@ class InvoiceAmountCalculatorShould {
             var consumedKwh = BigDecimal.valueOf(88_000.5436d);
 
             var invoicedAmount = new InvoiceAmountCalculator().calculate(
-                    new ProCustomer("EKW146830056", "23646789543457", "Big Company", 1_000_001),
+                    customer,
                     new EnergyConsumption(EnergyType.GAS, consumedKwh));
 
             Assertions.assertEquals(new Amount(consumedKwh.multiply(GAS_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_OVER_1_MILLION)), invoicedAmount);
@@ -90,7 +90,7 @@ class InvoiceAmountCalculatorShould {
             var consumedKwh = BigDecimal.valueOf(4_670.24754d);
 
             var invoicedAmount = new InvoiceAmountCalculator().calculate(
-                    new ProCustomer("EKW230468390", "93045928492730", "Little Company", 999_999),
+                    customer,
                     new EnergyConsumption(EnergyType.ELECTRICITY, consumedKwh));
 
             Assertions.assertEquals(new Amount(consumedKwh.multiply(ELECTRICITY_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_BELLOW_1_MILLION)), invoicedAmount);
@@ -101,7 +101,7 @@ class InvoiceAmountCalculatorShould {
             var consumedKwh = BigDecimal.valueOf(4_670.24754d);
 
             var invoicedAmount = new InvoiceAmountCalculator().calculate(
-                    new ProCustomer("EKW230468390", "93045928492730", "Little Company", 999_999),
+                    customer,
                     new EnergyConsumption(EnergyType.GAS, consumedKwh));
 
             Assertions.assertEquals(new Amount(consumedKwh.multiply(GAS_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_BELOW_1_MILLION)), invoicedAmount);
