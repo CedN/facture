@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 
 public class InvoiceAmountCalculator {
 
-    private IndividualCustomerPricer individualCustomerPricer = new IndividualCustomerPricer();
-    private ProCustomerPricer proCustomerPricer = new ProCustomerPricer();
+    private ElectricityPricer electricityPricer = new ElectricityPricer();
+    private GasPricer gasPricer = new GasPricer();
 
     public Amount calculate(Customer customer, EnergyConsumption... energyConsumptions) {
         return new Amount(Stream.of(energyConsumptions)
@@ -25,9 +25,9 @@ public class InvoiceAmountCalculator {
     }
 
     private BigDecimal getPricePerKwh(Customer customer, EnergyConsumption energyConsumption) {
-        return switch (customer) {
-            case IndividualCustomer c -> individualCustomerPricer.getPricePerKwh(energyConsumption.energyType());
-            case ProCustomer c -> proCustomerPricer.getPricePerKwh(energyConsumption.energyType(), c.sales());
+        return switch (energyConsumption.energyType()) {
+            case ELECTRICITY -> electricityPricer.getPricePerKwh(customer);
+            case GAS -> gasPricer.getPricePerKwh(customer);
         };
     }
 }
