@@ -6,15 +6,22 @@ import cna.customer.IndividualCustomer;
 import cna.customer.ProCustomer;
 
 import java.math.BigDecimal;
+import java.util.stream.Stream;
 
 public class InvoiceAmountCalculator {
 
     private IndividualCustomerPricer individualCustomerPricer = new IndividualCustomerPricer();
     private ProCustomerPricer proCustomerPricer = new ProCustomerPricer();
 
-    public Amount calculate(Customer customer, EnergyConsumption energyConsumption) {
+    public Amount calculate(Customer customer, EnergyConsumption... energyConsumptions) {
+        return new Amount(Stream.of(energyConsumptions)
+                                .map(energyConsumption -> calculateOneEnergyConsumption(customer, energyConsumption))
+                                .reduce(BigDecimal.ZERO, BigDecimal::add));
+    }
+
+    private BigDecimal calculateOneEnergyConsumption(Customer customer, EnergyConsumption energyConsumption) {
         var pricePerKwh = getPricePerKwh(customer, energyConsumption);
-        return new Amount(energyConsumption.kwh().multiply(pricePerKwh));
+        return energyConsumption.kwh().multiply(pricePerKwh);
     }
 
     private BigDecimal getPricePerKwh(Customer customer, EnergyConsumption energyConsumption) {

@@ -108,4 +108,21 @@ class InvoiceAmountCalculatorShould {
         }
     }
 
+    @Test
+    void compute_electricity_and_gas_amount() {
+        var customer = new IndividualCustomer("EKW263689034", "Mr", "Doe", "John");
+        var gasConsumption = new EnergyConsumption(EnergyType.GAS, BigDecimal.valueOf(10));
+        var electricityConsumption = new EnergyConsumption(EnergyType.ELECTRICITY, BigDecimal.valueOf(100));
+
+        var invoicedAmount = new InvoiceAmountCalculator().calculate(customer, gasConsumption, electricityConsumption);
+
+        Assertions.assertEquals(
+                new Amount(gasConsumption.kwh()
+                                         .multiply(GAS_PRICE_PER_KWH_FOR_INDIVIDUAL_CUSTOMER)
+                                         .add(electricityConsumption.kwh()
+                                                                    .multiply(ELECTRICITY_PRICE_PER_KWH_FOR_INDIVIDUAL_CUSTOMER))),
+                invoicedAmount);
+
+    }
+
 }
