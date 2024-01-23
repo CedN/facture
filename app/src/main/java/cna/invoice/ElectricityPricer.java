@@ -6,7 +6,7 @@ import cna.customer.ProCustomer;
 
 import java.math.BigDecimal;
 
-public class ElectricityPricer {
+class ElectricityPricer {
 
     private static final BigDecimal ELECTRICITY_PRICE_PER_KWH = BigDecimal.valueOf(0.133d);
     private static final BigDecimal ELECTRICITY_PRICE_PER_KWH_FOR_PRO_CUSTOMER_WITH_SALES_OF_1_MILLION_OR_OVER = BigDecimal.valueOf(0.11d);

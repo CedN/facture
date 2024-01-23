@@ -2,8 +2,6 @@ package cna.invoice;
 
 import cna.consumption.EnergyConsumption;
 import cna.customer.Customer;
-import cna.customer.IndividualCustomer;
-import cna.customer.ProCustomer;
 
 import java.math.BigDecimal;
 import java.util.stream.Stream;
