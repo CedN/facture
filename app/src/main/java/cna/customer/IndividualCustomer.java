@@ -1,4 +1,4 @@
 package cna.customer;
 
-public record IndividualCustomer(String reference, String opening, String lastname, String firstname) {
+public record IndividualCustomer(String reference, String opening, String lastname, String firstname) implements Customer{
 }
