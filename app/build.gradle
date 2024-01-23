@@ -2,6 +2,10 @@ plugins {
     id 'application'
 }
 
+application {
+    mainClass = 'cna.BillCalculation'
+}
+
 repositories {
     mavenCentral()
 }
